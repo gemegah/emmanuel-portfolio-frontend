@@ -28,3 +28,4 @@ Thumbs.db
 # agent/browser diagnostics
 .chrome-*.json
 .hostinger-*.txt
+.cloudflare-*.txt
