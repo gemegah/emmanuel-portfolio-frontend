@@ -66,7 +66,8 @@ For this portfolio, Option B is likely the simplest long-term path unless freque
 | Manual pre-migration backup | Pending user confirmation | Manual backups can be created once every 24 hours. Create one immediately before any destructive hosting/DNS change. |
 | GitHub repository | Verified | Private repo created: `gemegah/emmanuel-portfolio-frontend`. |
 | Frontend scaffold | Verified | Initial Next.js static-export app builds successfully. |
-| Deployment target | In progress | Cloudflare Pages is the preferred target. Use `Next.js (Static HTML Export)`, build command `npx next build`, output directory `out`. |
+| Deployment target | Partially complete | Cloudflare Pages project `emmanuel-portfolio-frontend` was created on 2026-08-16. Project URL will be `emmanuel-portfolio-frontend.pages.dev` after first deployment. Build command is `npx next build`; output directory is `out`. |
+| First Cloudflare deployment | Blocked on Cloudflare upload auth | Local Wrangler is installed via `npx` but not authenticated. Cloudflare API project creation works through the plugin, but file deployment requires Wrangler login, dashboard upload, or a scoped API token usable by Wrangler/CI. |
 | Domain/DNS cutover | Pending | Do not change DNS until Cloudflare preview deploy is verified and a fresh backup exists. |
 
 ## Sprint 1: Discovery and Content Inventory
