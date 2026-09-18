@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PagePanel, RecordCard, Tags } from "@/components/ui/Portfolio";
 import { projects } from "@/data/projects";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Projects",
   description: "Selected projects in applied AI, workflow automation, and systems integration by Emmanuel Gemegah.",
-};
+  path: "/projects"
+});
 
 export default function ProjectsPage() {
   return (

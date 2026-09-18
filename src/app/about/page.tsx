@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { MetadataRow, PagePanel, RecordCard } from "@/components/ui/Portfolio";
 import { aboutRecords } from "@/data/profile";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "About", description: "Workflow-first AI engineering, grounded in evaluation, cloud systems, product design, and security governance." };
+export const metadata: Metadata = createPageMetadata({
+  title: "About",
+  description: "Workflow-first AI engineering, grounded in evaluation, cloud systems, product design, and security governance.",
+  path: "/about"
+});
 
 export default function AboutPage() {
   return <PagePanel className="about-panel" code="Form AB-04 · Profile & credentials" title="About" intro="Workflow-first AI engineering, grounded in evaluation, cloud systems, product design, and security governance.">

@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "postbuild": "node scripts/normalize-static-segments.mjs",
+    "deploy:build": "npm run lint && npm run typecheck && npm run build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },

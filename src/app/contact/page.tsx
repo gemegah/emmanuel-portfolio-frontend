@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { PagePanel, RecordCard } from "@/components/ui/Portfolio";
 import { contact } from "@/data/navigation";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "Contact", description: "Start a conversation about AI automation, applied AI roles, and reliable workflow systems." };
+export const metadata: Metadata = createPageMetadata({
+  title: "Contact",
+  description: "Start a conversation about AI automation, applied AI roles, and reliable workflow systems.",
+  path: "/contact"
+});
 
 export default function ContactPage() {
   return <PagePanel className="contact-panel" code="Form CT-07 · Start a conversation" title="Contact" intro="Choose the channel that works best for you.">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MetadataRow, PagePanel, RecordCard, Tags } from "@/components/ui/Portfolio";
 import { projects } from "@/data/projects";
+import { createPageMetadata } from "@/lib/metadata";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -18,7 +19,11 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { slug } = await params;
   const project = projects.find(item => item.slug === slug);
   if (!project) notFound();
-  return { title: project.title, description: project.summary };
+  return createPageMetadata({
+    title: project.title,
+    description: project.summary,
+    path: `/projects/${project.slug}`
+  });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

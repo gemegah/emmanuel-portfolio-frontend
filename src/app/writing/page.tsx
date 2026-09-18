@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { ArticleRecords } from "@/components/ui/ArticleRecords";
 import { PagePanel } from "@/components/ui/Portfolio";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Writing",
-  description: "Articles and notes by Emmanuel Gemegah on applied AI, automation, and reliable systems."
-};
+  description: "Articles and notes by Emmanuel Gemegah on applied AI, automation, and reliable systems.",
+  path: "/writing"
+});
 
 export default function WritingPage() {
   return (

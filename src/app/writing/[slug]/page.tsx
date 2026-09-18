@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PagePanel, Tags } from "@/components/ui/Portfolio";
 import { articles } from "@/data/articles";
 import { projects } from "@/data/projects";
+import { createPageMetadata } from "@/lib/metadata";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -20,7 +21,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const article = articles.find(item => item.slug === slug);
   if (!article) notFound();
 
-  return { title: article.title, description: article.excerpt };
+  return createPageMetadata({
+    title: article.title,
+    description: article.excerpt,
+    path: `/writing/${article.slug}`
+  });
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {

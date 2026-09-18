@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { MetadataRow, PagePanel, RecordCard } from "@/components/ui/Portfolio";
 import { experience } from "@/data/profile";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "Experience", description: "AI evaluation, product leadership, consulting, and hands-on delivery." };
+export const metadata: Metadata = createPageMetadata({
+  title: "Experience",
+  description: "AI evaluation, product leadership, consulting, and hands-on delivery.",
+  path: "/experience"
+});
 
 export default function ExperiencePage() {
   return <PagePanel className="experience-panel" code="Form EX-01 · Professional experience" title="Experience" intro="AI evaluation, product leadership, consulting, and hands-on delivery.">
