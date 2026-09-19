@@ -135,6 +135,17 @@ h1 { margin-top: .625rem; font-size: clamp(2rem, 6vw, 3.4rem); line-height: .98;
 .workflow-table td:first-child { width: 3rem; font-family: var(--font-mono), monospace; font-size: .65rem; padding-right: .75rem; }
 .coverage-group + .coverage-group { border-top: 1px solid #0a0a0a44; padding-top: 1rem; }
 .coverage-group h4 { font: 700 .65rem var(--font-mono), monospace; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 .6rem; }
+.project-showcase .section-heading { margin-bottom: 2.75rem; }
+.showcase-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3.25rem 1.625rem; }
+.showcase-item { min-width: 0; margin: 0; color: var(--ink); background: var(--paper); border: var(--border-card) solid var(--ink); box-shadow: var(--offset-md) var(--offset-md) 0 var(--ink); }
+.showcase-image-frame { aspect-ratio: 8 / 5; overflow: hidden; background: var(--ink); border-bottom: 3px solid var(--ink); }
+.showcase-image-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.showcase-item figcaption { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; padding: 1.25rem; }
+.showcase-item h3 { font-size: clamp(1.15rem, 3vw, 1.5rem); line-height: 1.1; }
+.showcase-item figcaption > p:not(.eyebrow, .showcase-role) { font-size: .9rem; line-height: 1.65; }
+.showcase-role { padding-bottom: .65rem; border-bottom: 1px solid var(--ink); font: 700 .65rem/1.5 var(--font-mono), monospace; }
+.showcase-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .25rem; }
+.showcase-links .inline-action { max-width: 100%; overflow-wrap: anywhere; text-align: left; }
 .profile-ledger { display: grid; gap: 1.75rem; }
 .ledger-record { min-width: 0; }
 .ledger-marker { font: 700 .75rem/1.6 var(--font-mono), monospace; }
@@ -177,8 +188,9 @@ h1 { margin-top: .625rem; font-size: clamp(2rem, 6vw, 3.4rem); line-height: .98;
   .ledger-marker strong { width: 4.5rem; height: 4.5rem; }
   .project-detail .metadata-row > div { grid-template-columns: 7rem minmax(0, 1fr); }
   .workflow-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; }
-  .project-detail .page-panel > .case-section:last-child .record-body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .coverage-section .record-body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .coverage-group + .coverage-group { border-top: 0; border-left: 1px solid #0a0a0a44; padding: 0 0 0 1rem; }
+  .showcase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 1024px) {
   .contact-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

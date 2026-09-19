@@ -5,6 +5,26 @@ interface CaseSection {
   subtitle: string;
 }
 
+interface ProjectShowcaseLink {
+  label: string;
+  href: string;
+}
+
+interface ProjectShowcaseItem {
+  title: string;
+  workType: string;
+  period: string;
+  role: string;
+  summary: string;
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  links: readonly ProjectShowcaseLink[];
+}
+
 export interface Project {
   slug: string;
   code: string;
@@ -28,6 +48,7 @@ export interface Project {
   coverage: CaseSection & {
     groups: readonly { title: string; items: readonly string[] }[];
   };
+  showcase?: readonly ProjectShowcaseItem[];
 }
 
 export const projects = [
@@ -258,6 +279,127 @@ export const projects = [
         { title: "Engineering decisions", items: ["AI for Interpretation", "Explicit Data Logic", "Source Traceability", "Inspectable Filtering", "Duplicate Controls", "Editorial Review"] },
       ],
     },
+  },
+  {
+    slug: "selected-web-product-design",
+    code: "PR-0005",
+    title: "Selected Web & Product Design Work",
+    category: "Web & Product Design",
+    summary: "A curated record of responsive client websites, product interfaces, and interactive prototypes, included as supporting design and frontend experience alongside my current AI systems focus.",
+    status: null,
+    tone: "olive",
+    tags: ["UX/UI Design", "Responsive Web Design", "Frontend Implementation", "Figma Prototyping"],
+    stamp: "Design · Build",
+    challenge: {
+      title: "The design brief",
+      subtitle: "Clear journeys across different products and audiences",
+      facts: [
+        { label: "Scope", value: "Live websites and product interface work" },
+        { label: "Contribution", value: "UX/UI, responsive frontend implementation, and prototyping" },
+        { label: "Evidence", value: "Live destinations and public Figma prototypes" },
+      ],
+      why: "The work spans different audiences and decision paths, so each piece needed a clear hierarchy, responsive behavior, and an interface that made the next action easy to understand.",
+    },
+    solution: {
+      title: "Design approach",
+      subtitle: "From requirements to a testable interface",
+      columns: ["Stage", "Design activity"],
+      steps: [
+        "Clarify the audience, primary task, content requirements, and constraints for each product.",
+        "Structure the information and user journey around the decisions people need to make.",
+        "Develop a visual system that supports the brand while keeping hierarchy and interaction states clear.",
+        "Build or prototype the interface at high fidelity, including responsive behavior where the work moved into production.",
+        "Review the result across screen sizes and refine usability, content presentation, and interaction details.",
+      ],
+      notes: ["Focus · Usability and hierarchy", "Delivery · Live sites and prototypes"],
+    },
+    workflow: {
+      title: "Working process",
+      subtitle: "A practical path from discovery to delivery",
+      steps: [
+        "Review the brief, brand materials, content, and technical constraints.",
+        "Map the main journey and organize information around the user's next decision.",
+        "Create interface directions and reusable visual patterns in Figma.",
+        "Prototype key states and interactions before handoff or implementation.",
+        "Translate approved designs into responsive frontend layouts where implementation was in scope.",
+        "Check the finished experience for clarity, responsiveness, and consistent interaction behavior.",
+      ],
+    },
+    coverage: {
+      title: "Selected coverage",
+      subtitle: "Client websites · Product design · Delivery methods",
+      groups: [
+        { title: "Client websites", items: ["Herts On Training", "Accra Coded", "Responsive Layouts", "Frontend Implementation"] },
+        { title: "Product design", items: ["Air Control Products", "Onboarding Redesign", "User Flows", "Interactive Prototypes"] },
+        { title: "Methods", items: ["Figma", "Information Architecture", "UX/UI Design", "Responsive QA"] },
+      ],
+    },
+    showcase: [
+      {
+        title: "Herts On Training",
+        workType: "Live website",
+        period: "Current",
+        role: "Design and frontend implementation",
+        summary: "A responsive training website that organizes accredited first-aid and safety services around clear course discovery and booking paths.",
+        image: {
+          src: "/projects/selected-web-product-design/herts-on-training.webp",
+          alt: "Herts On Training homepage with first-aid course messaging, booking actions, and workplace training imagery",
+          width: 1440,
+          height: 900,
+        },
+        links: [
+          { label: "Visit the Herts On Training live site", href: "https://hertsontraining.co.uk/" },
+        ],
+      },
+      {
+        title: "Accra Coded",
+        workType: "Live website",
+        period: "Current",
+        role: "Design and frontend implementation",
+        summary: "A responsive wellness discovery website with an editorial visual system, local resource exploration, events, and community membership paths.",
+        image: {
+          src: "/projects/selected-web-product-design/accra-coded.webp",
+          alt: "Accra Coded homepage with wellness messaging, resource actions, and editorial lifestyle imagery",
+          width: 1440,
+          height: 900,
+        },
+        links: [
+          { label: "Visit the Accra Coded live site", href: "https://accracoded.com/" },
+        ],
+      },
+      {
+        title: "Air Control Products",
+        workType: "Website redesign",
+        period: "2025",
+        role: "Product Designer",
+        summary: "A product-led website redesign for a commercial and industrial HVAC supplier, covering product discovery, project proof, partner brands, and company information.",
+        image: {
+          src: "/projects/selected-web-product-design/air-control-products.webp",
+          alt: "Air Control Products website redesign showing HVAC solutions, product categories, project work, partner brands, and customer content",
+          width: 623,
+          height: 2560,
+        },
+        links: [
+          { label: "Open the Air Control Products Figma prototype", href: "https://www.figma.com/proto/dAf5XydGueoMsAdYjGO6LJ/My-Portfolio?node-id=730-171&t=uZMA4ulpitJ7kduG-1&scaling=min-zoom&content-scaling=fixed&page-id=680%3A217" },
+        ],
+      },
+      {
+        title: "Onboarding Redesign",
+        workType: "Product experience redesign",
+        period: "2024",
+        role: "UI/UX Designer",
+        summary: "A high-fidelity redesign of a multi-step onboarding experience, focused on explaining choices, reducing ambiguity, and creating a consistent progression into the product.",
+        image: {
+          src: "/projects/selected-web-product-design/onboarding-redesign.webp",
+          alt: "Onboarding redesign mockups showing dark mobile and desktop screens for a multi-step sports game entry flow",
+          width: 960,
+          height: 960,
+        },
+        links: [
+          { label: "Open the onboarding redesign Figma prototype", href: "https://www.figma.com/proto/dAf5XydGueoMsAdYjGO6LJ/My-Portfolio?node-id=258-30388&p=f&t=x3iDfnhPjlaW7xWL-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=290%3A33252&show-proto-sidebar=1" },
+        ],
+      },
+    ],
   },
 ] as const satisfies readonly Project[];
 

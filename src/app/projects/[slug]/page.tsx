@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MetadataRow, PagePanel, RecordCard, Tags } from "@/components/ui/Portfolio";
-import { projects } from "@/data/projects";
+import { projects, type Project } from "@/data/projects";
 import { createPageMetadata } from "@/lib/metadata";
 
 interface ProjectPageProps {
@@ -17,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find(item => item.slug === slug);
+  const project: Project | undefined = projects.find(item => item.slug === slug);
   if (!project) notFound();
   return createPageMetadata({
     title: project.title,
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find(item => item.slug === slug);
+  const project: Project | undefined = projects.find(item => item.slug === slug);
   if (!project) notFound();
 
   return (
@@ -61,11 +62,50 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <ul className="workflow-list">{project.workflow.steps.map(step => <li key={step}>{step}</li>)}</ul>
           </RecordCard>
         </section>
-        <section className="case-section" aria-label={project.coverage.title}>
+        <section className="case-section coverage-section" aria-label={project.coverage.title}>
           <RecordCard code={`${project.code}.4`} title={project.coverage.title} subtitle={project.coverage.subtitle} tone="olive">
             {project.coverage.groups.map(group => <div className="coverage-group" key={group.title}><h4 className="eyebrow">{group.title}</h4><Tags items={group.items} /></div>)}
           </RecordCard>
         </section>
+        {project.showcase ? (
+          <section className="case-section project-showcase" aria-labelledby="project-showcase-title">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">{project.code}.5 · Selected work</p>
+                <h2 id="project-showcase-title">Design showcase</h2>
+              </div>
+              <span className="record-count">{project.showcase.length.toString().padStart(2, "0")} pieces</span>
+            </div>
+            <div className="showcase-grid">
+              {project.showcase.map(item => (
+                <figure className="showcase-item" key={item.title}>
+                  <div className="showcase-image-frame">
+                    <Image
+                      src={item.image.src}
+                      alt={item.image.alt}
+                      width={item.image.width}
+                      height={item.image.height}
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption>
+                    <p className="eyebrow">{item.workType} · {item.period}</p>
+                    <h3>{item.title}</h3>
+                    <p className="showcase-role">{item.role}</p>
+                    <p>{item.summary}</p>
+                    <div className="showcase-links">
+                      {item.links.map(link => (
+                        <a className="inline-action" href={link.href} key={link.href} target="_blank" rel="noopener noreferrer">
+                          {link.label} <span aria-hidden="true">↗</span>
+                        </a>
+                      ))}
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </PagePanel>
     </div>
   );
