@@ -31,6 +31,105 @@ export interface Article {
 
 export const articles: readonly Article[] = [
   {
+    code: "WR-0004",
+    slug: "building-an-ai-seo-strategist-in-n8n",
+    title: "Building an AI SEO Strategist: Turning Scattered Data into Prioritized Actions",
+    excerpt: "How I built an n8n workflow that connects four SEO evidence sources, handles incomplete data, and turns page-level findings into a focused Top 5 action plan.",
+    publishedAt: null,
+    projectStatus: "In progress",
+    tags: ["n8n", "Applied AI", "SEO Analytics", "Workflow Engineering"],
+    href: "/writing/building-an-ai-seo-strategist-in-n8n",
+    relatedProjectSlugs: ["ai-seo-growth-intelligence"],
+    sections: [
+      {
+        heading: "The problem with having more SEO data",
+        blocks: [
+          { type: "paragraph", text: "A website can have search reports, analytics dashboards, keyword lists, and crawl exports while its owner still struggles to answer a simple question: what should I work on next? Each tool describes part of the situation. Someone has to compare those findings, decide which ones belong together, and turn them into a practical task." },
+          { type: "paragraph", text: "I built AI SEO Strategist around that decision. My aim was to bring the evidence into one n8n workflow and produce a short list of recommendations that someone could inspect and act on. I chose a Top 5 action plan because prioritization matters more than filling another report with everything a tool can measure." },
+          { type: "paragraph", text: "The central engineering problem was keeping the connection between a recommendation and its evidence clear as information moved through several sources and two AI analysis stages." },
+        ],
+      },
+      {
+        heading: "Giving each source a purpose",
+        blocks: [
+          { type: "paragraph", text: "I used four complementary sources. Google Search Console contributes search visibility: the pages and queries associated with impressions and clicks. GA4 contributes organic landing-page activity, including sessions and engagement. OpenSEO research contributes keyword demand, intent, and potential topic gaps. Screaming Frog contributes technical findings such as response codes, indexability, titles, and internal links." },
+          { type: "paragraph", text: "These sources answer different questions. A page may attract attention in search but have a technical issue that deserves investigation. Keyword research may suggest a useful topic even when no corresponding page exists. Bringing the sources together lets the analyst consider those relationships while retaining where each finding came from." },
+          { type: "paragraph", text: "I kept keyword estimates distinguishable from measured website performance. I also used manual CSV and JSON imports for the research and crawl data. That kept the first version manageable while preserving a clear record of the source and collection date." },
+        ],
+      },
+      {
+        heading: "Building a shared picture of each page",
+        blocks: [
+          { type: "paragraph", text: "I made page selection repeatable, with up to five relevant URLs during testing. The workflow uses an explicit reporting window so a recommendation can be traced back to the period it describes. Running the same selection again should mean inspecting the same pages, rather than receiving a different sample." },
+          { type: "paragraph", text: "The next step was connecting records to the right page. I normalized URLs by removing fragments and known tracking parameters and applying a consistent trailing-slash rule. Meaningful query parameters remain intact. The join uses that normalized identity instead of assuming that records arrive in the same order." },
+          { type: "paragraph", text: "Each page record keeps search queries, analytics, research, crawl findings, source dates, and coverage together. Unmatched keyword research also stays in the analysis as a proposed topic. It does not inherit performance figures from another page simply because it appears in the same input file." },
+        ],
+      },
+      {
+        heading: "The challenges that shaped the workflow",
+        blocks: [
+          { type: "paragraph", text: "Parallel branches introduced an important failure case: one source could reach the assembly step before the others. I added Merge nodes in Append mode as synchronization points, then performed the URL join after those branches completed. That separates waiting for evidence from deciding which records belong together." },
+          { type: "paragraph", text: "Another issue was processing that looked correct for one page but handled only the first input. I corrected the per-item execution settings and preserved item links so the page identity follows each request and analysis result. The report needs contributions from the full selected scope." },
+          { type: "paragraph", text: "Imports needed attention too. I replaced unsupported extraction settings and mapped actual Screaming Frog headers, including Address, Status Code, and Title 1. I also kept missing measurements separate from measured zero. A failed request becomes a visible limitation that the analyst and reviewer can consider." },
+        ],
+      },
+      {
+        heading: "Giving AI a focused responsibility",
+        blocks: [
+          { type: "paragraph", text: "I split AI analysis into two stages. The first receives one page or proposed-topic record and generates action candidates from that evidence. The second receives the records and candidates together and prioritizes the strongest actions across the selected scope. This gives the final planner context without asking it to interpret every raw export from scratch." },
+          { type: "paragraph", text: "Each candidate has a defined shape: the page or topic, target keyword, finding, evidence, priority, recommended action, business reason, confidence, and limitations. Validation checks field types, supported priority and confidence values, and nonempty evidence. The final planner must reuse evidence from the validated candidates." },
+          { type: "paragraph", text: "Those checks make errors easier to catch, but a valid response still needs judgment. I treat model explanations as recommendations for review. The supplied evidence remains the basis for deciding whether an action makes sense." },
+        ],
+      },
+      {
+        heading: "Making the output useful",
+        blocks: [
+          { type: "paragraph", text: "The report is designed around a decision rather than a page-by-page inventory. Every action explains what was found, what should change, why the change matters to the business, and how much confidence the evidence supports. The source findings and limitations appear beside the recommendation so the reviewer can assess its reasoning." },
+          { type: "paragraph", text: "I added duplicate removal and enforced a maximum of five distinct actions. The workflow can return fewer when the evidence does not justify five. That keeps the format from encouraging filler recommendations merely to complete a list." },
+          { type: "paragraph", text: "The output includes a readable HTML report and structured JSON. It also carries the reporting dates, pages analyzed, external collection dates, and missing or stale coverage. My goal is to make the next conversation specific: which action is worth taking, and what finding supports it?" },
+        ],
+      },
+      {
+        heading: "Checking behavior under difficult conditions",
+        blocks: [
+          { type: "paragraph", text: "I used a local verification harness with controlled fixtures to exercise the workflow's data-processing and validation logic. The two-page case checks that both pages reach analysis and contribute to one combined report. Other cases supply a failed GA4 response, missing source matches, real crawl-header names, and an unmatched research topic." },
+          { type: "paragraph", text: "I also checked invalid model output, duplicate actions, unsupported final evidence, and more than five distinct recommendations. These cases examine whether the workflow preserves useful information and rejects results that break its contract. A convincing report is only useful if the processing behind it behaves predictably." },
+          { type: "paragraph", text: "The fixtures provide repeatable checks of those behaviors. They helped me catch errors that a single successful page could conceal, and they give the implementation a practical way to detect regressions when its inputs or logic change." },
+        ],
+      },
+      {
+        heading: "What the project demonstrates",
+        blocks: [
+          { type: "paragraph", text: "The delivered work includes an importable n8n workflow, a structured evidence model, a Top 5 report format, CSV and JSON import support, templates, setup documentation, and automated checks. Together, those pieces show how I approached integration, data handling, troubleshooting, and AI-assisted analysis as one system." },
+          { type: "paragraph", text: "The most useful lesson was that recommendation quality depends on the evidence path. Page identity, timing, source coverage, and missing-data behavior all influence what an analyst can reasonably conclude. Improving those foundations makes the model's role more focused and the report easier to inspect." },
+          { type: "paragraph", text: "I kept the scope practical: a small page selection, four sources, and a concise report for human review. The project demonstrates the kind of applied AI engineering I value—connecting real tools, resolving concrete failure cases, and shaping the output around a decision someone needs to make." },
+        ],
+      },
+    ],
+    sources: [
+      {
+        label: "n8n — Merge node",
+        href: "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.merge/",
+        note: "Documents how Append mode waits for connected inputs before emitting their records. The synchronization design described here is my application of that behavior.",
+      },
+      {
+        label: "Google Search Console — Search Analytics query",
+        href: "https://developers.google.com/webmaster-tools/v1/searchanalytics/query",
+        note: "Reference for the search-performance dimensions, page filters, reporting dates, and response metrics used by the workflow.",
+      },
+      {
+        label: "Google Analytics — runReport",
+        href: "https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport",
+        note: "Reference for constructing GA4 report requests with dimensions, metrics, date ranges, and filters.",
+      },
+      {
+        label: "Screaming Frog — SEO Spider tabs",
+        href: "https://www.screamingfrog.co.uk/seo-spider/user-guide/tabs/",
+        note: "Reference for the crawl fields used in the import, including URL address, response code, indexability, and page title.",
+      },
+    ],
+  },
+  {
     code: "WR-0001",
     slug: "where-ai-belongs-in-an-automated-workflow",
     title: "Where AI Belongs in an Automated Workflow",
@@ -181,7 +280,7 @@ export const articles: readonly Article[] = [
     code: "WR-0003",
     slug: "designing-ai-seo-growth-intelligence-system",
     title: "Designing an AI SEO Growth Intelligence System with GA4 and Search Console",
-    excerpt: "An in-progress architecture for combining Search Console and GA4 data, deterministic opportunity scoring, and constrained AI analysis into prioritized SEO recommendations.",
+    excerpt: "The broader architecture behind AI SEO Strategist: a design exploration of daily analytics storage, transparent opportunity scoring, and constrained AI analysis.",
     publishedAt: null,
     projectStatus: "In progress",
     tags: ["GA4 Analytics", "Search Console", "AI SEO", "Data Workflows"],
@@ -191,10 +290,11 @@ export const articles: readonly Article[] = [
       {
         heading: "SEO analytics should determine what happens next",
         blocks: [
+          { type: "paragraph", text: "This article explores the broader architecture behind my AI SEO Strategist project. I have implemented a focused n8n MVP that combines four evidence sources and produces a Top 5 action plan. Daily storage, deterministic opportunity scoring, and scheduled reporting described below are broader design ideas rather than capabilities of that MVP." },
           { type: "paragraph", text: "I am designing an internal SEO Growth Intelligence system to answer a practical question: which SEO action should receive attention next if the goal is qualified traffic and leads?" },
           { type: "paragraph", text: "A conventional report can describe impressions, clicks, sessions, and average position. Those metrics become more useful when the system connects them to landing-page engagement and lead intent, identifies a specific opportunity, and preserves enough evidence for someone to review the recommendation." },
           { type: "paragraph", text: "The architecture therefore separates measurement, deterministic decision logic, AI interpretation, and human approval. The model does not receive a raw analytics export and decide what matters on its own." },
-          { type: "paragraph", text: "This is an in-progress architecture. The article describes the technical design and delivery boundaries without claiming that every integration or automated report is already operational." },
+          { type: "paragraph", text: "The architecture is a design discussion. It gives the project a direction for deeper analytics while the implemented MVP concentrates on connecting evidence, validating recommendations, and producing a concise report." },
         ],
       },
       {
@@ -264,12 +364,11 @@ export const articles: readonly Article[] = [
         ],
       },
       {
-        heading: "Current status and next milestones",
+        heading: "From broader architecture to a focused implementation",
         blocks: [
           { type: "paragraph", text: "The current website foundation includes route-specific metadata, canonical URLs, structured data, prerendered pages, crawl controls, and a base GA4 installation with intent events." },
-          { type: "paragraph", text: "Those intent events are not presented as confirmed leads or bookings. The measurement layer must first connect success events to verified delivery or completion states." },
-          { type: "paragraph", text: "Search Console and GA4 API ingestion, analytics storage, scheduled synchronization, derived datasets, opportunity scoring, structured AI analysis, and weekly reporting remain in progress." },
-          { type: "paragraph", text: "The next milestone is a small, testable analytics foundation: validate conversion measurement, import normalized daily data idempotently, implement a limited set of deterministic opportunities with unit tests, and produce one evidence-backed Markdown report before adding broader AI or dashboard capabilities." },
+          { type: "paragraph", text: "The n8n MVP implements page selection, Search Console and GA4 report requests, OpenSEO and Screaming Frog file imports, normalized evidence joins, two-stage AI analysis, and Top 5 report assembly. Local fixture checks cover multiple pages, incomplete sources, and invalid model responses." },
+          { type: "paragraph", text: "Persistent daily records, numeric opportunity scores, and scheduled reporting remain broader architectural options. The focused implementation demonstrates how to connect the evidence and make its recommendations inspectable within a manageable workflow." },
         ],
       },
     ],
@@ -277,12 +376,12 @@ export const articles: readonly Article[] = [
       {
         label: "Google Search Console — Search Analytics query",
         href: "https://developers.google.com/webmaster-tools/v1/searchanalytics/query",
-        note: "Official reference for querying Search Console performance dimensions and metrics. The portfolio project does not claim that automated ingestion is complete.",
+        note: "Official reference for querying Search Console performance dimensions and metrics. The MVP implements report requests; this article explores a broader daily ingestion design.",
       },
       {
         label: "Google Analytics — GA4 Data API",
         href: "https://developers.google.com/analytics/devguides/reporting/data/v1/rest",
-        note: "Official reference for programmatic GA4 reporting. API ingestion and scheduled synchronization remain in progress.",
+        note: "Official reference for programmatic GA4 reporting. The MVP implements report requests; persistent analytics storage and scheduled synchronization are broader design options.",
       },
       {
         label: "Google Search Central — Guidance on generative AI content",
